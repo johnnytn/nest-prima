@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AppService } from './app.service';
+import { Public } from './guards/jwt-auth.guard';
 import { CreateUserDto } from './user/dto/create-user.dto';
 import { UserController } from './user/user.controller';
-import { UserService } from './user/user.service';
 
 @Controller()
 export class AppController {
@@ -16,6 +16,7 @@ export class AppController {
     return this.appService.getHello();
   }
 
+  @Public()
   @Post('/register')
   registerUser(@Body() createUserDto: CreateUserDto) {
     return this.userController.create(createUserDto);

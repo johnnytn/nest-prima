@@ -3,7 +3,7 @@ import { PrismaService } from 'nestjs-prisma';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
-import { hashPassword } from 'src/utils/utils';
+import { generatePassword, hashPassword } from 'src/utils/utils';
 
 @Injectable()
 export class UserService {
@@ -11,7 +11,8 @@ export class UserService {
   async create(createUserDto: CreateUserDto) {
     try {
       const { email, role } = createUserDto;
-      const password = await hashPassword();
+      const generatedPassword = generatePassword();
+      const password = await hashPassword(generatedPassword);
 
       await this.prismaService.user.create({
         data: {
@@ -22,7 +23,7 @@ export class UserService {
       });
       return {
         email,
-        password,
+        password: generatedPassword,
       };
     } catch (error) {
       throw new BadRequestException(error.message);
@@ -38,6 +39,17 @@ export class UserService {
       where: { id },
     });
   }
+  findByEmail(email: string) {
+    return this.prismaService.user.findUnique({
+      where: { email },
+    });
+  }
+
+  /* findByLogin(email: string, password: string) {
+    return this.prismaService.user.findFirst({
+      where: { email, password },
+    });
+  } */
 
   update(id: string, payload: UpdateUserDto) {
     return this.prismaService.user.update({
