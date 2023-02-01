@@ -1,5 +1,9 @@
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+} from '@nestjs/common';
+import { PrismaService } from 'nestjs-prisma';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
@@ -7,16 +11,25 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UserService {
   constructor(private readonly prismaService: PrismaService) {}
   create(createUserDto: CreateUserDto) {
-    const { email, role } = createUserDto;
-    const password = '1213'; // TODO: encrypt
-    return this.prismaService.user.create({
-      data: {
-        email,
-        role,
-        password,
-      },
-    });
-    // return 'This action adds a new user';
+    try {
+      const { email, role } = createUserDto;
+      // TODO: encrypt
+      const password = '1213';
+      return this.prismaService.user.create({
+        data: {
+          email,
+          role,
+          password,
+        },
+      });
+    } catch (error) {
+      console.log('-----------------------------?');
+      /* throw new BadRequestException('Something bad happened', {
+        cause: new Error(),
+        description: 'Some error description',
+      }); */
+      throw new BadRequestException(error.message);
+    }
   }
 
   findAll() {
