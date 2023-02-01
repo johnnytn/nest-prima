@@ -13,15 +13,14 @@ export const hashPassword = async (
   return await bcrypt.hash(password, saltOrRounds);
 };
 
-// TODO: change password generation
 /**
  * Generate random password
  * @param password
  * @param saltOrRounds
  * @returns
  */
-export const generatePassword = (
-  password: string = `${Math.random() * 1000}`,
-) => {
-  return password;
+export const generatePassword = (password?: string) => {
+  const randomNumber = password || Math.random().toString(16);
+
+  return randomNumber.substring(2, randomNumber.length);
 };

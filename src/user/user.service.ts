@@ -45,12 +45,6 @@ export class UserService {
     });
   }
 
-  /* findByLogin(email: string, password: string) {
-    return this.prismaService.user.findFirst({
-      where: { email, password },
-    });
-  } */
-
   update(id: string, payload: UpdateUserDto) {
     return this.prismaService.user.update({
       data: payload,
