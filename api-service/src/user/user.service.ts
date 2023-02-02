@@ -115,10 +115,14 @@ export class UserService {
     return data.map((d) => d.metadata);
   }
 
-  async getStats(userId: string) {
+  /**
+   * Return the most requested stocks
+   * @param limit - set the number of stocks will be listed ( default 5)
+   * @returns
+   */
+  async findMostRequestedStocks(limit: number = 5) {
     const data = await this.prismaService.history.groupBy({
       by: ['symbol'],
-      where: { userId },
       _count: {
         symbol: true,
       },
@@ -127,6 +131,8 @@ export class UserService {
           symbol: 'desc',
         },
       },
+      // Limit to 5
+      take: limit,
     });
 
     return this.mapStats(data);

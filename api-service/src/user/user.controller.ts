@@ -52,6 +52,6 @@ export class UserController {
 
   @Get('/stats')
   getStats(@Request() req) {
-    return this.userService.getStats(req.user?.userId);
+    return this.userService.findMostRequestedStocks(req.user?.userId);
   }
 }

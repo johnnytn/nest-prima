@@ -16,7 +16,7 @@ export declare class UserService {
     remove(id: string): import(".prisma/client").Prisma.Prisma__UserClient<import(".prisma/client").User, never>;
     createHistory(createHistoryDto: CreateHistoryDto): Promise<void>;
     findHistoriesByUserId(userId: string): Promise<import(".prisma/client").Prisma.JsonValue[]>;
-    getStats(userId: string): Promise<{
+    findMostRequestedStocks(limit?: number): Promise<{
         stock: string;
         times_requested: number;
     }[]>;

@@ -94,10 +94,9 @@ let UserService = class UserService {
         });
         return data.map((d) => d.metadata);
     }
-    async getStats(userId) {
+    async findMostRequestedStocks(limit = 5) {
         const data = await this.prismaService.history.groupBy({
             by: ['symbol'],
-            where: { userId },
             _count: {
                 symbol: true,
             },
@@ -106,6 +105,7 @@ let UserService = class UserService {
                     symbol: 'desc',
                 },
             },
+            take: limit,
         });
         return this.mapStats(data);
     }

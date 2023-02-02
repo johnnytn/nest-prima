@@ -43,7 +43,7 @@ let UserController = class UserController {
     }
     getStats(req) {
         var _a;
-        return this.userService.getStats((_a = req.user) === null || _a === void 0 ? void 0 : _a.userId);
+        return this.userService.findMostRequestedStocks((_a = req.user) === null || _a === void 0 ? void 0 : _a.userId);
     }
 };
 __decorate([
