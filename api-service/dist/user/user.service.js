@@ -41,22 +41,6 @@ let UserService = class UserService {
             throw new common_1.BadRequestException(error.message);
         }
     }
-    async createHistory(createHistoryDto) {
-        try {
-            this.validateNewHistoryData(createHistoryDto);
-            const { userId, symbol, metadata } = createHistoryDto;
-            await this.prismaService.history.create({
-                data: {
-                    symbol,
-                    userId: userId,
-                    metadata: metadata,
-                },
-            });
-        }
-        catch (error) {
-            throw new common_1.BadRequestException(error.message);
-        }
-    }
     findAll() {
         return this.prismaService.user.findMany();
     }
@@ -83,6 +67,27 @@ let UserService = class UserService {
             where: {
                 id,
             },
+        });
+    }
+    async createHistory(createHistoryDto) {
+        try {
+            this.validateNewHistoryData(createHistoryDto);
+            const { userId, symbol, metadata } = createHistoryDto;
+            await this.prismaService.history.create({
+                data: {
+                    symbol,
+                    userId: userId,
+                    metadata: metadata,
+                },
+            });
+        }
+        catch (error) {
+            throw new common_1.BadRequestException(error.message);
+        }
+    }
+    findHistoriesByUserId(userId) {
+        return this.prismaService.history.findMany({
+            where: { userId },
         });
     }
     validateNewUserData(createUserDto) {

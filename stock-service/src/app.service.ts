@@ -18,7 +18,7 @@ export class AppService {
         const fieldsArr = fields.split(charSeparator);
         const valuesArr = values.split(charSeparator);
         if (fieldsArr.length && valuesArr.length) {
-          return this.mappedStockData(fieldsArr, valuesArr);
+          return this.mappedStockDataAll(fieldsArr, valuesArr);
         }
         return {};
       }
@@ -26,24 +26,6 @@ export class AppService {
     } catch (error) {
       throw new BadRequestException(error.message);
     }
-  }
-
-  private mappedStockData(fields: string[], values: string[]) {
-    const nameIndex = fields.findIndex((f) => f === 'Name');
-    const symbolIndex = fields.findIndex((f) => f === 'Symbol');
-    const openIndex = fields.findIndex((f) => f === 'Open');
-    const highIndex = fields.findIndex((f) => f === 'High');
-    const lowIndex = fields.findIndex((f) => f === 'Low');
-    const closeIndex = fields.findIndex((f) => f === 'Close');
-    const payload = {
-      name: values[nameIndex],
-      symbol: values[symbolIndex],
-      open: values[openIndex] ? Number(values[openIndex]) : 0,
-      high: values[highIndex] ? Number(values[highIndex]) : 0,
-      low: values[lowIndex] ? Number(values[lowIndex]) : 0,
-      close: values[closeIndex] ? Number(values[closeIndex]) : 0,
-    };
-    return payload;
   }
 
   // TODO: ADD formater

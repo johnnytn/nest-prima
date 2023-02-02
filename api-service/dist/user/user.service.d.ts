@@ -9,12 +9,13 @@ export declare class UserService {
         email: string;
         password: string;
     }>;
-    createHistory(createHistoryDto: CreateHistoryDto): Promise<void>;
     findAll(): import(".prisma/client").PrismaPromise<import(".prisma/client").User[]>;
     findOne(id: string): import(".prisma/client").Prisma.Prisma__UserClient<import(".prisma/client").User, never>;
     findByEmail(email: string): import(".prisma/client").Prisma.Prisma__UserClient<import(".prisma/client").User, never>;
     update(id: string, payload: UpdateUserDto): import(".prisma/client").Prisma.Prisma__UserClient<import(".prisma/client").User, never>;
     remove(id: string): import(".prisma/client").Prisma.Prisma__UserClient<import(".prisma/client").User, never>;
+    createHistory(createHistoryDto: CreateHistoryDto): Promise<void>;
+    findHistoriesByUserId(userId: string): import(".prisma/client").PrismaPromise<import(".prisma/client").History[]>;
     private validateNewUserData;
     private validateNewHistoryData;
 }

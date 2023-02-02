@@ -14,11 +14,9 @@ import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 @Controller('stocks')
 export class StockController {
   constructor(private readonly stockService: StockService) {}
-  // 3002
+
   @Get()
   async getStocks(@Request() req, @Query('q') code: string) {
     return this.stockService.getStocks(req, code);
-    // return
-    // axios
   }
 }

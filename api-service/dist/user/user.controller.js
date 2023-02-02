@@ -37,6 +37,10 @@ let UserController = class UserController {
     remove(id) {
         return this.userService.remove(id);
     }
+    getHistories(req) {
+        var _a;
+        return this.userService.findHistoriesByUserId((_a = req.user) === null || _a === void 0 ? void 0 : _a.userId);
+    }
 };
 __decorate([
     (0, jwt_auth_guard_1.Public)(),
@@ -74,6 +78,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "remove", null);
+__decorate([
+    (0, common_1.Get)('/history'),
+    __param(0, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], UserController.prototype, "getHistories", null);
 UserController = __decorate([
     (0, common_1.Controller)('user'),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),

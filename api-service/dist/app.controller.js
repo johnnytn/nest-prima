@@ -29,6 +29,9 @@ let AppController = class AppController {
     registerUser(createUserDto) {
         return this.userController.create(createUserDto);
     }
+    getHistories(req) {
+        return this.userController.getHistories(req);
+    }
 };
 __decorate([
     (0, common_1.Get)(),
@@ -44,6 +47,13 @@ __decorate([
     __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto]),
     __metadata("design:returntype", void 0)
 ], AppController.prototype, "registerUser", null);
+__decorate([
+    (0, common_1.Get)('/history'),
+    __param(0, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], AppController.prototype, "getHistories", null);
 AppController = __decorate([
     (0, common_1.Controller)(),
     __metadata("design:paramtypes", [app_service_1.AppService,

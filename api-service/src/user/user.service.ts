@@ -19,6 +19,11 @@ import { CreateHistoryDto } from './dto/create-history.dto';
 export class UserService {
   constructor(private readonly prismaService: PrismaService) {}
 
+  /**
+   * Create a basic user
+   * @param createUserDto
+   * @returns
+   */
   async create(createUserDto: CreateUserDto) {
     try {
       this.validateNewUserData(createUserDto);
@@ -38,24 +43,6 @@ export class UserService {
         email,
         password: generatedPassword,
       };
-    } catch (error) {
-      throw new BadRequestException(error.message);
-    }
-  }
-
-  async createHistory(createHistoryDto: CreateHistoryDto) {
-    try {
-      this.validateNewHistoryData(createHistoryDto);
-
-      const { userId, symbol, metadata } = createHistoryDto;
-
-      await this.prismaService.history.create({
-        data: {
-          symbol,
-          userId: userId,
-          metadata: metadata,
-        },
-      });
     } catch (error) {
       throw new BadRequestException(error.message);
     }
@@ -89,6 +76,34 @@ export class UserService {
       where: {
         id,
       },
+    });
+  }
+
+  /**
+   * Create a history for a requested symbol related to the given user
+   * @param createHistoryDto
+   */
+  async createHistory(createHistoryDto: CreateHistoryDto) {
+    try {
+      this.validateNewHistoryData(createHistoryDto);
+
+      const { userId, symbol, metadata } = createHistoryDto;
+
+      await this.prismaService.history.create({
+        data: {
+          symbol,
+          userId: userId,
+          metadata: metadata,
+        },
+      });
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
+  }
+
+  findHistoriesByUserId(userId: string) {
+    return this.prismaService.history.findMany({
+      where: { userId },
     });
   }
 

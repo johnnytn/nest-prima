@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Request } from '@nestjs/common';
 import { AppService } from './app.service';
 import { Public } from './guards/jwt-auth.guard';
 import { CreateUserDto } from './user/dto/create-user.dto';
@@ -20,5 +20,10 @@ export class AppController {
   @Post('/register')
   registerUser(@Body() createUserDto: CreateUserDto) {
     return this.userController.create(createUserDto);
+  }
+
+  @Get('/history')
+  getHistories(@Request() req) {
+    return this.userController.getHistories(req);
   }
 }

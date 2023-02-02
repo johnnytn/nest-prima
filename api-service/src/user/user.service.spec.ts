@@ -1,8 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from 'nestjs-prisma';
+import { StockService } from 'src/stock/stock.service';
 import {
   USER_EMAIL_REQUIRED,
-  USER_ROLE_REQUIRED,
+  USER_ROLE_NOT_ALLOWED,
   USER_ROLE_REQUIRED,
 } from 'src/utils/messages/user';
 import { RoleType } from './entities/user.entity';
@@ -15,15 +16,6 @@ describe('UserService', () => {
       create: jest.Mock;
     };
   };
-  // prismaService.user.create
-  // PrismaService
-  // let prisma = module.get<PrismaService>(PrismaService)
-
-  /* prisma.name.findMany = jest.fn().mockReturnValueOnce([
-    { id: 0, name: 'developer' },
-    { id: 10, name: 'architect' },
-    { id: 13, name: 'dog walker' }
-]); */
 
   beforeEach(async () => {
     mockedPrismaService = {
@@ -66,7 +58,7 @@ describe('UserService', () => {
         role: 'random role',
       };
       await expect(service.create(mockedData)).rejects.toThrowError(
-        USER_ROLE_REQUIRED,
+        USER_ROLE_NOT_ALLOWED,
       );
     });
 
