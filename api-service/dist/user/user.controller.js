@@ -41,9 +41,8 @@ let UserController = class UserController {
         var _a;
         return this.userService.findHistoriesByUserId((_a = req.user) === null || _a === void 0 ? void 0 : _a.userId);
     }
-    getStats(req) {
-        var _a;
-        return this.userService.findMostRequestedStocks((_a = req.user) === null || _a === void 0 ? void 0 : _a.userId);
+    getStats() {
+        return this.userService.findMostRequestedStocks();
     }
 };
 __decorate([
@@ -91,9 +90,8 @@ __decorate([
 ], UserController.prototype, "getHistories", null);
 __decorate([
     (0, common_1.Get)('/stats'),
-    __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "getStats", null);
 UserController = __decorate([

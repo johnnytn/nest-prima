@@ -15,16 +15,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
 const app_service_1 = require("./app.service");
-const jwt_auth_guard_1 = require("./guards/jwt-auth.guard");
+const roles_decorator_1 = require("./auth/decorators/roles.decorator");
+const jwt_auth_guard_1 = require("./auth/guards/jwt-auth.guard");
+const roles_guard_1 = require("./auth/guards/roles.guard");
 const create_user_dto_1 = require("./user/dto/create-user.dto");
+const user_entity_1 = require("./user/entities/user.entity");
 const user_controller_1 = require("./user/user.controller");
 let AppController = class AppController {
     constructor(appService, userController) {
         this.appService = appService;
         this.userController = userController;
-    }
-    getHello() {
-        return this.appService.getHello();
     }
     registerUser(createUserDto) {
         return this.userController.create(createUserDto);
@@ -32,16 +32,11 @@ let AppController = class AppController {
     getHistories(req) {
         return this.userController.getHistories(req);
     }
-    getStats(req) {
-        return this.userController.getStats(req);
+    getStats() {
+        console.log('fetch stats');
+        return this.userController.getStats();
     }
 };
-__decorate([
-    (0, common_1.Get)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", String)
-], AppController.prototype, "getHello", null);
 __decorate([
     (0, jwt_auth_guard_1.Public)(),
     (0, common_1.Post)('/register'),
@@ -51,7 +46,6 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AppController.prototype, "registerUser", null);
 __decorate([
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Get)('/history'),
     __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
@@ -59,14 +53,15 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AppController.prototype, "getHistories", null);
 __decorate([
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, roles_decorator_1.Roles)(user_entity_1.RoleType.ADMIN),
+    (0, common_1.UseGuards)(roles_guard_1.RolesGuard),
     (0, common_1.Get)('/stats'),
-    __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], AppController.prototype, "getStats", null);
 AppController = __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Controller)(),
     __metadata("design:paramtypes", [app_service_1.AppService,
         user_controller_1.UserController])

@@ -24,6 +24,10 @@ __decorate([
 __decorate([
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
+], LoginUserDto.prototype, "role", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
 ], LoginUserDto.prototype, "password", void 0);
 exports.LoginUserDto = LoginUserDto;
 //# sourceMappingURL=login.dto.js.map

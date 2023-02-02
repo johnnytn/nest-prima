@@ -107,7 +107,7 @@ let UserService = class UserService {
             },
             take: limit,
         });
-        return this.mapStats(data);
+        return data ? this.mapStats(data) : [];
     }
     validateNewUserData(createUserDto) {
         if (!createUserDto.email)

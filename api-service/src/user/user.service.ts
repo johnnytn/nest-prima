@@ -135,7 +135,7 @@ export class UserService {
       take: limit,
     });
 
-    return this.mapStats(data);
+    return data ? this.mapStats(data) : [];
   }
 
   private validateNewUserData(createUserDto: CreateUserDto) {

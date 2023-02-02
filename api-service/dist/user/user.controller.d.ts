@@ -13,7 +13,7 @@ export declare class UserController {
     update(id: string, updateUserDto: UpdateUserDto): import(".prisma/client").Prisma.Prisma__UserClient<import(".prisma/client").User, never>;
     remove(id: string): import(".prisma/client").Prisma.Prisma__UserClient<import(".prisma/client").User, never>;
     getHistories(req: any): Promise<import(".prisma/client").Prisma.JsonValue[]>;
-    getStats(req: any): Promise<{
+    getStats(): Promise<{
         stock: string;
         times_requested: number;
     }[]>;

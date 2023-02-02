@@ -7,10 +7,15 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AppService } from './app.service';
-import { JwtAuthGuard, Public } from './guards/jwt-auth.guard';
+import { Roles } from './auth/decorators/roles.decorator';
+import { JwtAuthGuard, Public } from './auth/guards/jwt-auth.guard';
+import { RolesGuard } from './auth/guards/roles.guard';
+
 import { CreateUserDto } from './user/dto/create-user.dto';
+import { RoleType } from './user/entities/user.entity';
 import { UserController } from './user/user.controller';
 
+@UseGuards(JwtAuthGuard)
 @Controller()
 export class AppController {
   constructor(
@@ -18,26 +23,22 @@ export class AppController {
     private readonly userController: UserController,
   ) {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
-  }
-
   @Public()
   @Post('/register')
   registerUser(@Body() createUserDto: CreateUserDto) {
     return this.userController.create(createUserDto);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('/history')
   getHistories(@Request() req) {
     return this.userController.getHistories(req);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @Roles(RoleType.ADMIN)
+  @UseGuards(RolesGuard)
   @Get('/stats')
-  getStats(@Request() req) {
-    return this.userController.getStats(req);
+  getStats() {
+    console.log('fetch stats');
+    return this.userController.getStats();
   }
 }
