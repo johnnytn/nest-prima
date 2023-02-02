@@ -85,15 +85,29 @@ let UserService = class UserService {
             throw new common_1.BadRequestException(error.message);
         }
     }
-    findHistoriesByUserId(userId) {
-        return this.prismaService.history.findMany({
+    async findHistoriesByUserId(userId) {
+        const data = await this.prismaService.history.findMany({
             where: { userId },
+            select: {
+                metadata: true,
+            },
         });
+        return data.map((d) => d.metadata);
     }
-    getStats(userId) {
-        return this.prismaService.history.aggregate({
+    async getStats(userId) {
+        const data = await this.prismaService.history.groupBy({
+            by: ['symbol'],
             where: { userId },
+            _count: {
+                symbol: true,
+            },
+            orderBy: {
+                _count: {
+                    symbol: 'desc',
+                },
+            },
         });
+        return this.mapStats(data);
     }
     validateNewUserData(createUserDto) {
         if (!createUserDto.email)
@@ -112,6 +126,14 @@ let UserService = class UserService {
         if (!data.metadata)
             throw new Error(user_1.HISTORY_METADATA_REQUIRED);
         return true;
+    }
+    mapStats(data) {
+        return data.map((d) => {
+            return {
+                stock: d.symbol,
+                times_requested: d._count.symbol,
+            };
+        });
     }
 };
 UserService = __decorate([

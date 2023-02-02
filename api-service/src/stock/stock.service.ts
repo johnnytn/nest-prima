@@ -13,10 +13,11 @@ export class StockService {
       const { data } = await axios.get(`${API_PATH}stocks/${code}`);
 
       if (data) {
+        const metadata = this.mapStockToDB(data);
         await this.userService.createHistory({
           userId: request.user.userId,
           symbol: data[STOCK_FIELDS.SYMBOL],
-          metadata: this.mapStockToDB(data),
+          metadata,
         });
         this.logger.log(
           `Stock "${data[STOCK_FIELDS.SYMBOL]}" has been added to user "${
@@ -55,6 +56,7 @@ export class StockService {
       low: stock[STOCK_FIELDS.LOW] ? Number(stock[STOCK_FIELDS.LOW]) : 0,
       close: stock[STOCK_FIELDS.CLOSE],
     };
+
     return payload;
   }
 }

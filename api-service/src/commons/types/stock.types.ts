@@ -19,3 +19,12 @@ export interface Stock {
   Volume: string;
   Name: string;
 }
+
+/*   stock: d.symbol,
+        times_requested: d._count.symbol, */
+export interface GrouppedHistoryBySymbol {
+  symbol: string;
+  _count: {
+    symbol: number;
+  };
+}

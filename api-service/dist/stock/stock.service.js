@@ -25,10 +25,11 @@ let StockService = StockService_1 = class StockService {
             const API_PATH = `http://localhost:3002/`;
             const { data } = await axios_1.default.get(`${API_PATH}stocks/${code}`);
             if (data) {
+                const metadata = this.mapStockToDB(data);
                 await this.userService.createHistory({
                     userId: request.user.userId,
                     symbol: data[stock_types_1.STOCK_FIELDS.SYMBOL],
-                    metadata: this.mapStockToDB(data),
+                    metadata,
                 });
                 this.logger.log(`Stock "${data[stock_types_1.STOCK_FIELDS.SYMBOL]}" has been added to user "${request.user.userId}" History`);
             }

@@ -10,6 +10,9 @@ export declare class AppController {
         email: string;
         password: string;
     }>;
-    getHistories(req: any): import(".prisma/client").PrismaPromise<import(".prisma/client").History[]>;
-    getStats(req: any): import(".prisma/client").PrismaPromise<import(".prisma/client").History[]>;
+    getHistories(req: any): Promise<import(".prisma/client").Prisma.JsonValue[]>;
+    getStats(req: any): Promise<{
+        stock: string;
+        times_requested: number;
+    }[]>;
 }

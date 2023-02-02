@@ -33,7 +33,7 @@ let AppController = class AppController {
         return this.userController.getHistories(req);
     }
     getStats(req) {
-        return this.userController.getHistories(req);
+        return this.userController.getStats(req);
     }
 };
 __decorate([

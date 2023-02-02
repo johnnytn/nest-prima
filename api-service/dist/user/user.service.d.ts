@@ -15,12 +15,12 @@ export declare class UserService {
     update(id: string, payload: UpdateUserDto): import(".prisma/client").Prisma.Prisma__UserClient<import(".prisma/client").User, never>;
     remove(id: string): import(".prisma/client").Prisma.Prisma__UserClient<import(".prisma/client").User, never>;
     createHistory(createHistoryDto: CreateHistoryDto): Promise<void>;
-    findHistoriesByUserId(userId: string): import(".prisma/client").PrismaPromise<import(".prisma/client").History[]>;
-    getStats(userId: string): import(".prisma/client").PrismaPromise<import(".prisma/client").Prisma.GetHistoryAggregateType<{
-        where: {
-            userId: string;
-        };
-    }>>;
+    findHistoriesByUserId(userId: string): Promise<import(".prisma/client").Prisma.JsonValue[]>;
+    getStats(userId: string): Promise<{
+        stock: string;
+        times_requested: number;
+    }[]>;
     private validateNewUserData;
     private validateNewHistoryData;
+    private mapStats;
 }

@@ -14,6 +14,7 @@ import {
 } from 'src/utils/messages/user';
 import { RoleType } from './entities/user.entity';
 import { CreateHistoryDto } from './dto/create-history.dto';
+import { GrouppedHistoryBySymbol } from 'src/commons/types/stock.types';
 
 @Injectable()
 export class UserService {
@@ -88,7 +89,9 @@ export class UserService {
       this.validateNewHistoryData(createHistoryDto);
 
       const { userId, symbol, metadata } = createHistoryDto;
-
+      /* console.log('------------------payload');
+      console.log({ metadata }); */
+      // TODO: check why the order is changing
       await this.prismaService.history.create({
         data: {
           symbol,
@@ -101,16 +104,32 @@ export class UserService {
     }
   }
 
-  findHistoriesByUserId(userId: string) {
-    return this.prismaService.history.findMany({
+  async findHistoriesByUserId(userId: string) {
+    const data = await this.prismaService.history.findMany({
       where: { userId },
+      select: {
+        metadata: true,
+      },
     });
+
+    return data.map((d) => d.metadata);
   }
 
-  getStats(userId: string) {
-    return this.prismaService.history.aggregate({
+  async getStats(userId: string) {
+    const data = await this.prismaService.history.groupBy({
+      by: ['symbol'],
       where: { userId },
+      _count: {
+        symbol: true,
+      },
+      orderBy: {
+        _count: {
+          symbol: 'desc',
+        },
+      },
     });
+
+    return this.mapStats(data);
   }
 
   private validateNewUserData(createUserDto: CreateUserDto) {
@@ -127,5 +146,14 @@ export class UserService {
     if (!data.metadata) throw new Error(HISTORY_METADATA_REQUIRED);
 
     return true;
+  }
+
+  private mapStats(data: GrouppedHistoryBySymbol[]) {
+    return data.map((d) => {
+      return {
+        stock: d.symbol,
+        times_requested: d._count.symbol,
+      };
+    });
   }
 }

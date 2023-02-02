@@ -38,6 +38,6 @@ export class AppController {
   @UseGuards(JwtAuthGuard)
   @Get('/stats')
   getStats(@Request() req) {
-    return this.userController.getHistories(req);
+    return this.userController.getStats(req);
   }
 }
