@@ -15,22 +15,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.StockController = void 0;
 const common_1 = require("@nestjs/common");
 const stock_service_1 = require("./stock.service");
+const jwt_auth_guard_1 = require("../guards/jwt-auth.guard");
 let StockController = class StockController {
     constructor(stockService) {
         this.stockService = stockService;
     }
-    async getStocks(code) {
-        return this.stockService.getStocks(code);
+    async getStocks(req, code) {
+        return this.stockService.getStocks(req, code);
     }
 };
 __decorate([
     (0, common_1.Get)(),
-    __param(0, (0, common_1.Query)('q')),
+    __param(0, (0, common_1.Request)()),
+    __param(1, (0, common_1.Query)('q')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [Object, String]),
     __metadata("design:returntype", Promise)
 ], StockController.prototype, "getStocks", null);
 StockController = __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Controller)('stocks'),
     __metadata("design:paramtypes", [stock_service_1.StockService])
 ], StockController);

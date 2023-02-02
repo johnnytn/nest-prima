@@ -4,7 +4,15 @@ export enum RoleType {
   ADMIN = 'admin',
 }
 
+export class History {
+  id: string;
+  userId: string;
+  symbol: string;
+  metadata: JSON;
+}
+
 export class User {
+  id: string;
   email: string;
   role: RoleType;
   password: string;

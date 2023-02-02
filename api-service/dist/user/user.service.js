@@ -41,6 +41,22 @@ let UserService = class UserService {
             throw new common_1.BadRequestException(error.message);
         }
     }
+    async createHistory(createHistoryDto) {
+        try {
+            this.validateNewHistoryData(createHistoryDto);
+            const { userId, symbol, metadata } = createHistoryDto;
+            await this.prismaService.history.create({
+                data: {
+                    symbol,
+                    userId: userId,
+                    metadata: metadata,
+                },
+            });
+        }
+        catch (error) {
+            throw new common_1.BadRequestException(error.message);
+        }
+    }
     findAll() {
         return this.prismaService.user.findMany();
     }
@@ -71,11 +87,20 @@ let UserService = class UserService {
     }
     validateNewUserData(createUserDto) {
         if (!createUserDto.email)
-            throw new Error(user_1.USER_EMAIL_NOT_FOUND);
+            throw new Error(user_1.USER_EMAIL_REQUIRED);
         if (!createUserDto.role)
-            throw new Error(user_1.USER_ROLE_NOT_FOUND);
+            throw new Error(user_1.USER_ROLE_REQUIRED);
         if (!Object.values(user_entity_1.RoleType).includes(createUserDto.role))
             throw new Error(user_1.USER_ROLE_NOT_ALLOWED);
+        return true;
+    }
+    validateNewHistoryData(data) {
+        if (!data.userId)
+            throw new Error(user_1.HISTORY_USER_ID_REQUIRED);
+        if (!data.symbol)
+            throw new Error(user_1.HISTORY_SYMBOL_REQUIRED);
+        if (!data.metadata)
+            throw new Error(user_1.HISTORY_METADATA_REQUIRED);
         return true;
     }
 };

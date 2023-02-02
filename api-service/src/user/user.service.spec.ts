@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from 'nestjs-prisma';
 import {
-  USER_EMAIL_NOT_FOUND,
-  USER_ROLE_NOT_ALLOWED,
-  USER_ROLE_NOT_FOUND,
+  USER_EMAIL_REQUIRED,
+  USER_ROLE_REQUIRED,
+  USER_ROLE_REQUIRED,
 } from 'src/utils/messages/user';
 import { RoleType } from './entities/user.entity';
 import { UserService } from './user.service';
@@ -56,7 +56,7 @@ describe('UserService', () => {
         role: null,
       };
       await expect(service.create(mockedData)).rejects.toThrowError(
-        USER_ROLE_NOT_FOUND,
+        USER_ROLE_REQUIRED,
       );
     });
 
@@ -66,7 +66,7 @@ describe('UserService', () => {
         role: 'random role',
       };
       await expect(service.create(mockedData)).rejects.toThrowError(
-        USER_ROLE_NOT_ALLOWED,
+        USER_ROLE_REQUIRED,
       );
     });
 
@@ -77,7 +77,7 @@ describe('UserService', () => {
       };
 
       await expect(service.create(mockedData)).rejects.toThrowError(
-        USER_EMAIL_NOT_FOUND,
+        USER_EMAIL_REQUIRED,
       );
     });
 

@@ -27,7 +27,7 @@ AuthModule = __decorate([
             passport_1.PassportModule,
             jwt_1.JwtModule.register({
                 secret: constants_1.jwtConstants.secret,
-                signOptions: { expiresIn: '60s' },
+                signOptions: { expiresIn: constants_1.jwtConstants.expiresIn },
             }),
             nestjs_prisma_1.PrismaModule.forRoot(),
         ],

@@ -1,16 +1,23 @@
-import { Controller, Get, Post, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Query,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { StockService } from './stock.service';
-import { CreateStockDto } from './dto/create-stock.dto';
-import { UpdateStockDto } from './dto/update-stock.dto';
-import axios from 'axios';
 
+import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
+
+@UseGuards(JwtAuthGuard)
 @Controller('stocks')
 export class StockController {
   constructor(private readonly stockService: StockService) {}
   // 3002
   @Get()
-  async getStocks(@Query('q') code: string) {
-    return this.stockService.getStocks(code);
+  async getStocks(@Request() req, @Query('q') code: string) {
+    return this.stockService.getStocks(req, code);
     // return
     // axios
   }
