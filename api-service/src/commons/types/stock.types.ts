@@ -1,4 +1,5 @@
 export enum STOCK_FIELDS {
+  DATE = 'Date',
   NAME = 'Name',
   SYMBOL = 'Symbol',
   OPEN = 'Open',

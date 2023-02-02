@@ -13,4 +13,9 @@ export declare class UserController {
     update(id: string, updateUserDto: UpdateUserDto): import(".prisma/client").Prisma.Prisma__UserClient<import(".prisma/client").User, never>;
     remove(id: string): import(".prisma/client").Prisma.Prisma__UserClient<import(".prisma/client").User, never>;
     getHistories(req: any): import(".prisma/client").PrismaPromise<import(".prisma/client").History[]>;
+    getStats(req: any): import(".prisma/client").PrismaPromise<import(".prisma/client").Prisma.GetHistoryAggregateType<{
+        where: {
+            userId: string;
+        };
+    }>>;
 }

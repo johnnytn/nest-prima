@@ -16,6 +16,11 @@ export declare class UserService {
     remove(id: string): import(".prisma/client").Prisma.Prisma__UserClient<import(".prisma/client").User, never>;
     createHistory(createHistoryDto: CreateHistoryDto): Promise<void>;
     findHistoriesByUserId(userId: string): import(".prisma/client").PrismaPromise<import(".prisma/client").History[]>;
+    getStats(userId: string): import(".prisma/client").PrismaPromise<import(".prisma/client").Prisma.GetHistoryAggregateType<{
+        where: {
+            userId: string;
+        };
+    }>>;
     private validateNewUserData;
     private validateNewHistoryData;
 }

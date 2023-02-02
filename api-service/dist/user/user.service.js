@@ -90,6 +90,11 @@ let UserService = class UserService {
             where: { userId },
         });
     }
+    getStats(userId) {
+        return this.prismaService.history.aggregate({
+            where: { userId },
+        });
+    }
     validateNewUserData(createUserDto) {
         if (!createUserDto.email)
             throw new Error(user_1.USER_EMAIL_REQUIRED);

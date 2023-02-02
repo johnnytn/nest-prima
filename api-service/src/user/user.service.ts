@@ -107,6 +107,12 @@ export class UserService {
     });
   }
 
+  getStats(userId: string) {
+    return this.prismaService.history.aggregate({
+      where: { userId },
+    });
+  }
+
   private validateNewUserData(createUserDto: CreateUserDto) {
     if (!createUserDto.email) throw new Error(USER_EMAIL_REQUIRED);
     if (!createUserDto.role) throw new Error(USER_ROLE_REQUIRED);

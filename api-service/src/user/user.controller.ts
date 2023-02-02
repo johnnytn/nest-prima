@@ -49,4 +49,9 @@ export class UserController {
   getHistories(@Request() req) {
     return this.userService.findHistoriesByUserId(req.user?.userId);
   }
+
+  @Get('/stats')
+  getStats(@Request() req) {
+    return this.userService.getStats(req.user?.userId);
+  }
 }

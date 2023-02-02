@@ -11,5 +11,6 @@ export declare class StockService {
         low: number;
         close: number;
     }>;
-    private mappedStockData;
+    private mapStockToResponse;
+    private mapStockToDB;
 }

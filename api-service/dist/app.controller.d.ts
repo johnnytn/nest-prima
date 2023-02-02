@@ -11,4 +11,5 @@ export declare class AppController {
         password: string;
     }>;
     getHistories(req: any): import(".prisma/client").PrismaPromise<import(".prisma/client").History[]>;
+    getStats(req: any): import(".prisma/client").PrismaPromise<import(".prisma/client").History[]>;
 }

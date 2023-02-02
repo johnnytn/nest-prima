@@ -32,6 +32,9 @@ let AppController = class AppController {
     getHistories(req) {
         return this.userController.getHistories(req);
     }
+    getStats(req) {
+        return this.userController.getHistories(req);
+    }
 };
 __decorate([
     (0, common_1.Get)(),
@@ -48,12 +51,21 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AppController.prototype, "registerUser", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Get)('/history'),
     __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], AppController.prototype, "getHistories", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, common_1.Get)('/stats'),
+    __param(0, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], AppController.prototype, "getStats", null);
 AppController = __decorate([
     (0, common_1.Controller)(),
     __metadata("design:paramtypes", [app_service_1.AppService,

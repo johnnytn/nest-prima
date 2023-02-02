@@ -28,17 +28,17 @@ let StockService = StockService_1 = class StockService {
                 await this.userService.createHistory({
                     userId: request.user.userId,
                     symbol: data[stock_types_1.STOCK_FIELDS.SYMBOL],
-                    metadata: data,
+                    metadata: this.mapStockToDB(data),
                 });
                 this.logger.log(`Stock "${data[stock_types_1.STOCK_FIELDS.SYMBOL]}" has been added to user "${request.user.userId}" History`);
             }
-            return this.mappedStockData(data);
+            return this.mapStockToResponse(data);
         }
         catch (error) {
             throw new common_1.BadRequestException(error.message);
         }
     }
-    mappedStockData(stock) {
+    mapStockToResponse(stock) {
         const payload = {
             name: stock[stock_types_1.STOCK_FIELDS.NAME],
             symbol: stock[stock_types_1.STOCK_FIELDS.SYMBOL],
@@ -46,6 +46,20 @@ let StockService = StockService_1 = class StockService {
             high: stock[stock_types_1.STOCK_FIELDS.HIGH] ? Number(stock[stock_types_1.STOCK_FIELDS.HIGH]) : 0,
             low: stock[stock_types_1.STOCK_FIELDS.LOW] ? Number(stock[stock_types_1.STOCK_FIELDS.LOW]) : 0,
             close: stock[stock_types_1.STOCK_FIELDS.CLOSE] ? Number(stock[stock_types_1.STOCK_FIELDS.CLOSE]) : 0,
+        };
+        return payload;
+    }
+    mapStockToDB(stock) {
+        const payload = {
+            date: stock[stock_types_1.STOCK_FIELDS.DATE]
+                ? new Date(stock[stock_types_1.STOCK_FIELDS.DATE]).toJSON()
+                : '',
+            name: stock[stock_types_1.STOCK_FIELDS.NAME],
+            symbol: stock[stock_types_1.STOCK_FIELDS.SYMBOL],
+            open: stock[stock_types_1.STOCK_FIELDS.OPEN],
+            high: stock[stock_types_1.STOCK_FIELDS.HIGH] ? Number(stock[stock_types_1.STOCK_FIELDS.HIGH]) : 0,
+            low: stock[stock_types_1.STOCK_FIELDS.LOW] ? Number(stock[stock_types_1.STOCK_FIELDS.LOW]) : 0,
+            close: stock[stock_types_1.STOCK_FIELDS.CLOSE],
         };
         return payload;
     }
