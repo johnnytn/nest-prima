@@ -6,9 +6,8 @@ import {
   Request,
   UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { StockService } from './stock.service';
-
-import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 
 @UseGuards(JwtAuthGuard)
 @Controller('stocks')
