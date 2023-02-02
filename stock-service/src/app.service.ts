@@ -5,7 +5,7 @@ import axios from 'axios';
 export class AppService {
   async getStock(code: string): Promise<any> {
     try {
-      const API_PATH = 'https://stooq.com/q/l/';
+      const API_PATH = process.env.STOCK_API_URL || 'https://stooq.com/q/l/';
       const { data } = await axios.get(
         `${API_PATH}?s=${code}&f=sd2t2ohlcvn&h&e=csv`,
       );
