@@ -44,15 +44,30 @@ All the endpoints should work as on the Instructions, and a swagger docs can be 
 
 ## Endpoints:
 
-for yours praticality theese endpoints were moved to the root as well
-
 - **POST** /register - _for basic registration_
 - **POST** /auth/reset-passowrd - _to reset user's password_
 - **GET** /stock?q=code - _to fetch stock data_
 - **GET** /history - _to see the user stock history_
 - **GET** /stats - _to see the most requested stocks (admin only route)_
 
-## Unit test
+## Unit test ( api-service)
 
 - UserService (user.service.spec)
-- StockService (stock.service.spec) (wiṕ)
+- StockService (stock.service.spec) (wip)
+
+## Unit test ( stock-service)
+
+- AppService (app.service.spec)
+- AppController ( app.e2e-spec )
+
+## Prima Studio
+
+Prisma offers a management enviroment that can be access through:
+
+```bash
+$ npx prisma studio
+
+or
+
+$ npm run prisma
+```
