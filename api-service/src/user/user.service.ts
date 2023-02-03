@@ -89,8 +89,6 @@ export class UserService {
       this.validateNewHistoryData(createHistoryDto);
 
       const { userId, symbol, metadata } = createHistoryDto;
-      /* console.log('------------------payload');
-      console.log({ metadata }); */
       // TODO: check why the order is changing
       await this.prismaService.history.create({
         data: {

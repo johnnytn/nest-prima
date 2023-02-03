@@ -4,21 +4,38 @@
 
 ### api-service
 
-```
+```bash
 $ cd api-service
-$ npm i
 
+$ npm i
+# create db container
 $ docker-compose up
+
 $ npm run start
 ```
 
 ### stock-service
 
-```
+```bash
 $ cd stock-service
 
 $  npm i
+
 $ npm run start
+```
+
+## Test
+
+```bash
+$ cd <project_name>
+# unit tests
+$ npm run test
+
+# e2e tests
+$ npm run test:e2e
+
+# test coverage
+$ npm run test:cov
 ```
 
 ## Details
@@ -31,3 +48,8 @@ All the endpoints should work as on the Instructions, and a swagger docs can be 
 - **GET** /stock?q=code - _to fetch stock data_
 - **GET** /history - _to see the user stock history_
 - **GET** /stats - _to see the most requested stocks (admin only route)_
+
+## Unit test
+
+- UserService (user.service.spec)
+- StockService (stock.service.spec) (wiṕ)

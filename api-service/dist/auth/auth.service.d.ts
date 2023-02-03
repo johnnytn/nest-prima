@@ -9,4 +9,5 @@ export declare class AuthService {
     login(user: LoginUserDto): Promise<{
         access_token: string;
     }>;
+    resetPassword(email: string): void;
 }

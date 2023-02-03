@@ -26,6 +26,9 @@ let AppController = class AppController {
         this.appService = appService;
         this.userController = userController;
     }
+    getHello() {
+        return this.appService.getHello();
+    }
     registerUser(createUserDto) {
         return this.userController.create(createUserDto);
     }
@@ -37,6 +40,12 @@ let AppController = class AppController {
         return this.userController.getStats();
     }
 };
+__decorate([
+    (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", String)
+], AppController.prototype, "getHello", null);
 __decorate([
     (0, jwt_auth_guard_1.Public)(),
     (0, common_1.Post)('/register'),

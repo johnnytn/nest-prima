@@ -23,6 +23,11 @@ export class AppController {
     private readonly userController: UserController,
   ) {}
 
+  @Get()
+  getHello(): string {
+    return this.appService.getHello();
+  }
+
   @Public()
   @Post('/register')
   registerUser(@Body() createUserDto: CreateUserDto) {

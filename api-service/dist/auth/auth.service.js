@@ -50,6 +50,7 @@ let AuthService = class AuthService {
             access_token: this.jwtService.sign(payload),
         };
     }
+    resetPassword(email) { }
 };
 AuthService = __decorate([
     (0, common_1.Injectable)(),

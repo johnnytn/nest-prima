@@ -1,10 +1,12 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import axios from 'axios';
+import { STOCK_CODE_REQUIRED } from './constants';
 
 @Injectable()
 export class AppService {
   async getStock(code: string): Promise<any> {
     try {
+      if (!code) throw new BadRequestException(STOCK_CODE_REQUIRED);
       const API_PATH = process.env.STOCK_API_URL || 'https://stooq.com/q/l/';
       const { data } = await axios.get(
         `${API_PATH}?s=${code}&f=sd2t2ohlcvn&h&e=csv`,
@@ -18,19 +20,22 @@ export class AppService {
         const fieldsArr = fields.split(charSeparator);
         const valuesArr = values.split(charSeparator);
         if (fieldsArr.length && valuesArr.length) {
-          return this.mappedStockDataAll(fieldsArr, valuesArr);
+          return this.normalizeStockData(fieldsArr, valuesArr);
         }
-        return {};
+        return data;
       }
-      return data;
+
+      return {};
     } catch (error) {
+      console.log(error.message);
       throw new BadRequestException(error.message);
     }
   }
 
-  // TODO: ADD formater
-  private mappedStockDataAll(fields: string[], values: string) {
+  // Made public for testing purposes
+  public normalizeStockData(fields: string[], values: string[]) {
     const payload = {};
+    if (!fields?.length || !values?.length) return {};
     fields.forEach((field, index) => {
       payload[fields[index]] = values[index];
     });

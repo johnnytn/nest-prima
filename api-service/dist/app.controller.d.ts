@@ -5,6 +5,7 @@ export declare class AppController {
     private readonly appService;
     private readonly userController;
     constructor(appService: AppService, userController: UserController);
+    getHello(): string;
     registerUser(createUserDto: CreateUserDto): Promise<{
         email: string;
         password: string;

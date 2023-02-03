@@ -34,4 +34,7 @@ export class AuthService {
       access_token: this.jwtService.sign(payload),
     };
   }
+
+  // TODO: implement
+  resetPassword(email: string) {}
 }
