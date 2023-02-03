@@ -16,44 +16,43 @@ import { RolesGuard } from './auth/guards/roles.guard';
 import { CreateUserDto } from './user/dto/create-user.dto';
 import { RoleType } from './user/entities/user.entity';
 import { UserController } from './user/user.controller';
+import { UserService } from './user/user.service';
 
 @UseGuards(JwtAuthGuard)
 @Controller()
 export class AppController {
   constructor(
     private readonly appService: AppService,
-    private readonly userController: UserController,
-    // private readonly authService: AuthService,
-    private readonly authController: AuthController,
+    private readonly userService: UserService,
+    private readonly authService: AuthService,
   ) {}
 
   @Get()
   getHello(): string {
     return this.appService.getHello();
   }
-
+  // For yours praticality theese endpoints were moved to the root as well
   @Public()
   @Post('/register')
   registerUser(@Body() createUserDto: CreateUserDto) {
-    return this.userController.create(createUserDto);
+    return this.userService.create(createUserDto);
   }
 
   @Get('/history')
   getHistories(@Request() req) {
-    return this.userController.getHistories(req);
+    return this.userService.findHistoriesByUserId(req.user?.userId);
   }
 
   @Roles(RoleType.ADMIN)
   @UseGuards(RolesGuard)
   @Get('/stats')
   getStats() {
-    console.log('fetch stats');
-    return this.userController.getStats();
+    return this.userService.findMostRequestedStocks();
   }
 
   @Public()
   @Post('reset-passowrd')
   async resetPassword(@Body('email') email: string) {
-    return this.authController.resetPassword(email);
+    return this.authService.resetPassword(email);
   }
 }

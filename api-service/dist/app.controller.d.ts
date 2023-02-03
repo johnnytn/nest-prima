@@ -1,12 +1,12 @@
 import { AppService } from './app.service';
-import { AuthController } from './auth/auth.controller';
+import { AuthService } from './auth/auth.service';
 import { CreateUserDto } from './user/dto/create-user.dto';
-import { UserController } from './user/user.controller';
+import { UserService } from './user/user.service';
 export declare class AppController {
     private readonly appService;
-    private readonly userController;
-    private readonly authController;
-    constructor(appService: AppService, userController: UserController, authController: AuthController);
+    private readonly userService;
+    private readonly authService;
+    constructor(appService: AppService, userService: UserService, authService: AuthService);
     getHello(): string;
     registerUser(createUserDto: CreateUserDto): Promise<{
         email: string;

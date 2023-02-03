@@ -15,34 +15,34 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
 const app_service_1 = require("./app.service");
-const auth_controller_1 = require("./auth/auth.controller");
+const auth_service_1 = require("./auth/auth.service");
 const roles_decorator_1 = require("./auth/decorators/roles.decorator");
 const jwt_auth_guard_1 = require("./auth/guards/jwt-auth.guard");
 const roles_guard_1 = require("./auth/guards/roles.guard");
 const create_user_dto_1 = require("./user/dto/create-user.dto");
 const user_entity_1 = require("./user/entities/user.entity");
-const user_controller_1 = require("./user/user.controller");
+const user_service_1 = require("./user/user.service");
 let AppController = class AppController {
-    constructor(appService, userController, authController) {
+    constructor(appService, userService, authService) {
         this.appService = appService;
-        this.userController = userController;
-        this.authController = authController;
+        this.userService = userService;
+        this.authService = authService;
     }
     getHello() {
         return this.appService.getHello();
     }
     registerUser(createUserDto) {
-        return this.userController.create(createUserDto);
+        return this.userService.create(createUserDto);
     }
     getHistories(req) {
-        return this.userController.getHistories(req);
+        var _a;
+        return this.userService.findHistoriesByUserId((_a = req.user) === null || _a === void 0 ? void 0 : _a.userId);
     }
     getStats() {
-        console.log('fetch stats');
-        return this.userController.getStats();
+        return this.userService.findMostRequestedStocks();
     }
     async resetPassword(email) {
-        return this.authController.resetPassword(email);
+        return this.authService.resetPassword(email);
     }
 };
 __decorate([
@@ -86,8 +86,8 @@ AppController = __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Controller)(),
     __metadata("design:paramtypes", [app_service_1.AppService,
-        user_controller_1.UserController,
-        auth_controller_1.AuthController])
+        user_service_1.UserService,
+        auth_service_1.AuthService])
 ], AppController);
 exports.AppController = AppController;
 //# sourceMappingURL=app.controller.js.map
