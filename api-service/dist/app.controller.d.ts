@@ -1,10 +1,12 @@
 import { AppService } from './app.service';
+import { AuthController } from './auth/auth.controller';
 import { CreateUserDto } from './user/dto/create-user.dto';
 import { UserController } from './user/user.controller';
 export declare class AppController {
     private readonly appService;
     private readonly userController;
-    constructor(appService: AppService, userController: UserController);
+    private readonly authController;
+    constructor(appService: AppService, userController: UserController, authController: AuthController);
     getHello(): string;
     registerUser(createUserDto: CreateUserDto): Promise<{
         email: string;
@@ -15,4 +17,8 @@ export declare class AppController {
         stock: string;
         times_requested: number;
     }[]>;
+    resetPassword(email: string): Promise<{
+        message: string;
+        password: string;
+    }>;
 }

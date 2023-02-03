@@ -48,7 +48,7 @@ export class AuthService {
 
   /**
    * Generate and update the user password
-   * @param email
+   * @param email user to be updated
    * @returns
    */
   async resetPassword(email: string) {

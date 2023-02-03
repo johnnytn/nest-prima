@@ -31,12 +31,7 @@ AuthModule = __decorate([
             }),
             nestjs_prisma_1.PrismaModule.forRoot(),
         ],
-        providers: [
-            auth_service_1.AuthService,
-            local_strategy_1.LocalStrategy,
-            jwt_strategy_1.JwtStrategy,
-            user_service_1.UserService,
-        ],
+        providers: [auth_service_1.AuthService, local_strategy_1.LocalStrategy, jwt_strategy_1.JwtStrategy, user_service_1.UserService],
         controllers: [auth_controller_1.AuthController],
     })
 ], AuthModule);

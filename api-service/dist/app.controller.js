@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
 const app_service_1 = require("./app.service");
+const auth_controller_1 = require("./auth/auth.controller");
 const roles_decorator_1 = require("./auth/decorators/roles.decorator");
 const jwt_auth_guard_1 = require("./auth/guards/jwt-auth.guard");
 const roles_guard_1 = require("./auth/guards/roles.guard");
@@ -22,9 +23,10 @@ const create_user_dto_1 = require("./user/dto/create-user.dto");
 const user_entity_1 = require("./user/entities/user.entity");
 const user_controller_1 = require("./user/user.controller");
 let AppController = class AppController {
-    constructor(appService, userController) {
+    constructor(appService, userController, authController) {
         this.appService = appService;
         this.userController = userController;
+        this.authController = authController;
     }
     getHello() {
         return this.appService.getHello();
@@ -38,6 +40,9 @@ let AppController = class AppController {
     getStats() {
         console.log('fetch stats');
         return this.userController.getStats();
+    }
+    async resetPassword(email) {
+        return this.authController.resetPassword(email);
     }
 };
 __decorate([
@@ -69,11 +74,20 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], AppController.prototype, "getStats", null);
+__decorate([
+    (0, jwt_auth_guard_1.Public)(),
+    (0, common_1.Post)('reset-passowrd'),
+    __param(0, (0, common_1.Body)('email')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], AppController.prototype, "resetPassword", null);
 AppController = __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Controller)(),
     __metadata("design:paramtypes", [app_service_1.AppService,
-        user_controller_1.UserController])
+        user_controller_1.UserController,
+        auth_controller_1.AuthController])
 ], AppController);
 exports.AppController = AppController;
 //# sourceMappingURL=app.controller.js.map

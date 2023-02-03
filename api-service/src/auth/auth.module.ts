@@ -23,17 +23,7 @@ import { JwtStrategy } from './strategy/jwt.strategy';
     }),
     PrismaModule.forRoot(),
   ],
-  providers: [
-    AuthService,
-    LocalStrategy,
-    JwtStrategy,
-    // Add JwtAuthGuard to whole project
-    /* {
-      provide: APP_GUARD,
-      useClass: JwtAuthGuard,
-    }, */
-    UserService,
-  ],
+  providers: [AuthService, LocalStrategy, JwtStrategy, UserService],
   controllers: [AuthController],
 })
 export class AuthModule {}

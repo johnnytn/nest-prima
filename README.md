@@ -44,7 +44,10 @@ All the endpoints should work as on the Instructions, and a swagger docs can be 
 
 ## Endpoints:
 
+for yours praticality theese endpoints were moved to the root as well
+
 - **POST** /register - _for basic registration_
+- **POST** /auth/reset-passowrd - _to reset user's password_
 - **GET** /stock?q=code - _to fetch stock data_
 - **GET** /history - _to see the user stock history_
 - **GET** /stats - _to see the most requested stocks (admin only route)_

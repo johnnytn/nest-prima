@@ -7,6 +7,8 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AppService } from './app.service';
+import { AuthController } from './auth/auth.controller';
+import { AuthService } from './auth/auth.service';
 import { Roles } from './auth/decorators/roles.decorator';
 import { JwtAuthGuard, Public } from './auth/guards/jwt-auth.guard';
 import { RolesGuard } from './auth/guards/roles.guard';
@@ -21,6 +23,8 @@ export class AppController {
   constructor(
     private readonly appService: AppService,
     private readonly userController: UserController,
+    // private readonly authService: AuthService,
+    private readonly authController: AuthController,
   ) {}
 
   @Get()
@@ -45,5 +49,11 @@ export class AppController {
   getStats() {
     console.log('fetch stats');
     return this.userController.getStats();
+  }
+
+  @Public()
+  @Post('reset-passowrd')
+  async resetPassword(@Body('email') email: string) {
+    return this.authController.resetPassword(email);
   }
 }
