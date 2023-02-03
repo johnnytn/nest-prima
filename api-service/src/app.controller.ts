@@ -31,7 +31,7 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
-  // For yours praticality theese endpoints were moved to the root as well
+  // For yours praticality theese endpoints were moved to the root
   @Public()
   @Post('/register')
   registerUser(@Body() createUserDto: CreateUserDto) {
