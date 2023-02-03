@@ -1,12 +1,23 @@
-import { Injectable, NotAcceptableException } from '@nestjs/common';
+import {
+  Injectable,
+  Logger,
+  NotAcceptableException,
+  NotFoundException,
+} from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from 'src/user/user.service';
 
 import { LoginUserDto } from './dto/login.dto';
+import { generatePassword, hashPassword } from 'src/utils/utils';
+import {
+  USER_NOT_FOUND,
+  USER_PASSWORD_RESETED,
+} from 'src/commons/constants/user.constants';
 
 @Injectable()
 export class AuthService {
+  private logger = new Logger(AuthService.name);
   constructor(
     private readonly userService: UserService,
     private jwtService: JwtService,
@@ -35,6 +46,23 @@ export class AuthService {
     };
   }
 
-  // TODO: implement
-  resetPassword(email: string) {}
+  /**
+   * Generate and update the user password
+   * @param email
+   * @returns
+   */
+  async resetPassword(email: string) {
+    const user = await this.userService.findByEmail(email);
+    if (user) {
+      const generatedPassword = generatePassword();
+      const password = await hashPassword(generatedPassword);
+      await this.userService.update(user.id, { password });
+
+      // TODO: add email sender
+      const message = USER_PASSWORD_RESETED(user.email);
+      this.logger.log(message);
+      return { message, password: generatedPassword };
+    }
+    throw new NotFoundException(USER_NOT_FOUND);
+  }
 }

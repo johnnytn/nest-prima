@@ -8,7 +8,7 @@ import { UserService } from 'src/user/user.service';
 
 import { AuthController } from './auth.controller';
 import { PrismaModule } from 'nestjs-prisma';
-import { jwtConstants } from './constants';
+import { jwtConstants } from '../commons/constants/jwt.constants';
 
 import { LocalStrategy } from './strategy/local.strategy';
 import { JwtStrategy } from './strategy/jwt.strategy';

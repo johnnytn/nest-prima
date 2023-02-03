@@ -19,16 +19,20 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
+var AuthService_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
 const bcrypt = require("bcrypt");
 const jwt_1 = require("@nestjs/jwt");
 const user_service_1 = require("../user/user.service");
-let AuthService = class AuthService {
+const utils_1 = require("../utils/utils");
+const user_constants_1 = require("../commons/constants/user.constants");
+let AuthService = AuthService_1 = class AuthService {
     constructor(userService, jwtService) {
         this.userService = userService;
         this.jwtService = jwtService;
+        this.logger = new common_1.Logger(AuthService_1.name);
     }
     async validateUser(email, password) {
         const user = await this.userService.findByEmail(email);
@@ -50,9 +54,20 @@ let AuthService = class AuthService {
             access_token: this.jwtService.sign(payload),
         };
     }
-    resetPassword(email) { }
+    async resetPassword(email) {
+        const user = await this.userService.findByEmail(email);
+        if (user) {
+            const generatedPassword = (0, utils_1.generatePassword)();
+            const password = await (0, utils_1.hashPassword)(generatedPassword);
+            await this.userService.update(user.id, { password });
+            const message = (0, user_constants_1.USER_PASSWORD_RESETED)(user.email);
+            this.logger.log(message);
+            return { message, password: generatedPassword };
+        }
+        throw new common_1.NotFoundException(user_constants_1.USER_NOT_FOUND);
+    }
 };
-AuthService = __decorate([
+AuthService = AuthService_1 = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [user_service_1.UserService,
         jwt_1.JwtService])
