@@ -1,8 +1,8 @@
 # Node.js Challenge
 
-## How to run the project (WIP)
+## How to run the project
 
-### api-service
+### Api-service
 
 ```bash
 $ cd api-service
@@ -14,7 +14,15 @@ $ docker-compose up
 $ npm run start
 ```
 
-### stock-service
+### Stock-service
+
+```bash
+$ cd stock-service
+
+$ docker-compuse up
+```
+
+or
 
 ```bash
 $ cd stock-service

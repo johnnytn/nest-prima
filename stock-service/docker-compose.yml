@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  api:
+    container_name: "stock-service"
+    build:
+      context: .      
+      dockerfile: Dockerfile
+    entrypoint: ["npm", "run", "start:prod"]    
+    ports:
+      - 3002:3002    
+    volumes:
+      - ./app:/usr/src/app
+      - /usr/src/app/node_modules
+    

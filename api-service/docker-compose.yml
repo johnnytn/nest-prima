@@ -1,8 +1,5 @@
-# docker-compose.yml
-
 version: '3.8'
-services: 
-
+services:
   postgres:
     image: postgres:13.5
     restart: always
