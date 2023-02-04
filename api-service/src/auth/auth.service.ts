@@ -14,6 +14,7 @@ import {
   USER_NOT_FOUND,
   USER_PASSWORD_RESETED,
 } from 'src/commons/constants/user.constants';
+import { MailService } from 'src/mail/mail.service';
 
 @Injectable()
 export class AuthService {
@@ -21,6 +22,7 @@ export class AuthService {
   constructor(
     private readonly userService: UserService,
     private jwtService: JwtService,
+    private mailService: MailService,
   ) {}
 
   // TODO: add prisma model types or create
@@ -58,9 +60,9 @@ export class AuthService {
       const password = await hashPassword(generatedPassword);
       await this.userService.update(user.id, { password });
 
-      // TODO: add email sender
       const message = USER_PASSWORD_RESETED(user.email);
       this.logger.log(message);
+      this.mailService.sendNewPasswordMail(email, generatedPassword);
       return { message, password: generatedPassword };
     }
     throw new NotFoundException(USER_NOT_FOUND);

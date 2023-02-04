@@ -12,6 +12,7 @@ import { jwtConstants } from '../commons/constants/jwt.constants';
 
 import { LocalStrategy } from './strategy/local.strategy';
 import { JwtStrategy } from './strategy/jwt.strategy';
+import { MailService } from 'src/mail/mail.service';
 
 @Module({
   imports: [
@@ -23,7 +24,13 @@ import { JwtStrategy } from './strategy/jwt.strategy';
     }),
     PrismaModule.forRoot(),
   ],
-  providers: [AuthService, LocalStrategy, JwtStrategy, UserService],
+  providers: [
+    AuthService,
+    LocalStrategy,
+    JwtStrategy,
+    UserService,
+    MailService,
+  ],
   controllers: [AuthController],
 })
 export class AuthModule {}
