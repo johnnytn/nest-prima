@@ -8,8 +8,7 @@ export class MailService {
   async sendNewPasswordMail(email: string, password: string) {
     await this.mailerService.sendMail({
       to: email,
-      // from: '"Support Team" <support@example.com>', // override default from
-      subject: 'Welcome to Nice App! Confirm your Email',
+      subject: 'Password reset request',
       template: './password-reset', // `.hbs` extension is appended automatically
       context: {
         email,

@@ -79,3 +79,7 @@ or
 
 $ npm run prisma
 ```
+
+## Email
+
+To use the email service add the configuration into the .env file
